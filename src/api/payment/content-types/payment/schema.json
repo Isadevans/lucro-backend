@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payments",
+  "info": {
+    "singularName": "payment",
+    "pluralName": "payments",
+    "displayName": "Payment"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "price": {
+      "type": "decimal"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "waiting_payment",
+        "paid"
+      ]
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::customer.customer"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    },
+    "transactionId": {
+      "type": "integer"
+    },
+    "trackingParameters": {
+      "type": "json"
+    },
+    "commission": {
+      "type": "json"
+    },
+    "approvedDate": {
+      "type": "datetime"
+    }
+  }
+}
