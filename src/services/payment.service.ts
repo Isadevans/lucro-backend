@@ -9,7 +9,7 @@ import {BlackoutData, BlackoutWebhook} from "../types";
 /**
  * Atualiza o status de um pagamento e sincroniza com serviços externos
  */
-export const updatePaymentStatus = async (transactionId: number, newStatus: string,webhook: BlackoutData): Promise<boolean> => {
+export const updatePaymentStatus = async (transactionId: number, newStatus: string,webhook?: BlackoutData): Promise<boolean> => {
   try {
     const payments= await strapi.documents('api::payment.payment').findMany({
         filters: { transactionId },
@@ -23,7 +23,7 @@ export const updatePaymentStatus = async (transactionId: number, newStatus: stri
       documentId: payment.documentId,
       data: {
         paymentStatus: newStatus as any,
-        ...(newStatus === 'paid' && { approvedDate:  webhook.paidAt}),
+        ...(newStatus === 'paid' && { approvedDate:  webhook?.paidAt}),
         ...(newStatus === 'refunded' && { refundedAt: new Date().toISOString() }),
       },
     });
